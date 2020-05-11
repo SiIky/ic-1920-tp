@@ -1,4 +1,4 @@
-MD := relatorio.md
+MD := report.md
 PDF := $(MD:.md=.pdf)
 DEPS := $(MD) \
     contador.mcrl2

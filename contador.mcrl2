@@ -10,9 +10,8 @@ eqn
 proc
     Ct(n: Int) =
             (n > 0)
-               -> ((n == N)
-                       -> dw . Ct(pred(n))
-                       <> up . Ct(succ(n)) + dw . Ct(pred(n)))
+               -> (dw . Ct(pred(n))
+                  + ((n < N) -> up . Ct(succ(n))))
                <> (up . Ct(1) + zr . Ct(0))
     ;
 init 

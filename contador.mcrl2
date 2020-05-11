@@ -1,0 +1,19 @@
+act
+    up, zr, dw;
+
+map
+    N: Int;
+
+eqn
+    N = 10;
+
+proc
+    Ct(n: Int) =
+            (n > 0)
+               -> ((n == N)
+                       -> dw . Ct(pred(n))
+                       <> up . Ct(succ(n)) + dw . Ct(pred(n)))
+               <> (up . Ct(1) + zr . Ct(0))
+    ;
+init 
+    Ct(0);

@@ -1,11 +1,14 @@
 MD := relatorio.md
 PDF := $(MD:.md=.pdf)
-DEPS := $(PDF) \
+DEPS := $(MD) \
+    contador.mcrl2
+
+TARGS := $(PDF) \
     contador.lps \
     contador.lts \
-    contador.mcrl2 \
+    contador.mcrl2
 
-all: $(DEPS)
+all: $(TARGS)
 
 %.lps: %.mcrl2
 	mcrl22lps $< $@

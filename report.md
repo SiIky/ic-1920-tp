@@ -1,4 +1,4 @@
-# TP 1: Interação e Concorrência
+# TP 1: Interacção e Concorrência
 
 ## Questão 1
 

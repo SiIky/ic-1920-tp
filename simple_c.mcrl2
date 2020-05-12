@@ -1,0 +1,14 @@
+act zr, dw, up ;
+
+proc
+    C_0 = zr . C_0 + up . C_1 ;
+    C_1 = dw . C_0 + up . C_2 ;
+    C_2 = dw . C_1 + up . C_3 ;
+    C_3 = dw . C_2 + up . C_4 ;
+    C_4 = dw . C_3 + up . C_5 ;
+    C_5 = dw . C_4 + up . C_6 ;
+    C_6 = dw . C_5 + up . C_7 ;
+    C_7 = dw . C_6 + up . C_8 ;
+    C_8 = dw . C_7 ;
+
+init C_0 ;

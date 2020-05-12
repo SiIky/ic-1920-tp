@@ -1,12 +1,16 @@
 MD := report.md
-PDF := $(MD:.md=.pdf)
-DEPS := $(MD) \
-    contador.mcrl2
 
-TARGS := $(DEPS) $(PDF) \
-    contador.lps \
-    contador.lts \
-    contador.mcrl2
+MCRL2 := \
+    contador.mcrl2 \
+    simple_c.mcrl2 \
+
+PDF := $(MD:.md=.pdf)
+LTS := $(MCRL2:.mcrl2=.lts)
+LPS := $(MCRL2:.mcrl2=.lps)
+
+DEPS := $(MD) $(MCRL2)
+
+TARGS := $(DEPS) $(PDF) $(MCRL2) $(LTS) $(LPS)
 
 all: $(TARGS)
 

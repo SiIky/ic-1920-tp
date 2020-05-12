@@ -55,7 +55,7 @@ Esta ferramenta permite-nos verificar as ações possíveis de realizar em cada 
 
 ## Questão 2
 
-Os processos $C^n$ e $Ct_n$ ($n \in \mathbb{N}$) sao deterministas pois $\forall\ p \in S, a \in N : \exists! q \in S : (p, a, q) \in \rightarrow$, e como tal, $C^n ~ Ct_n \Leftrightarrow Tr(C^n) = Tr(Ct_n)$.
+Os processos $C^n$ e $Ct_n$ ($n \in \mathbb{N}$) sao deterministas pois $\forall\ p \in S, a \in N : \exists! q \in S : (p, a, q) \in \rightarrow$, e como tal, $C^n \sim Ct_n \Leftrightarrow Tr(C^n) = Tr(Ct_n)$.
 
 Caso $n = 0$:
  :  $$Tr(C^n) = Tr(Ct_n)$$

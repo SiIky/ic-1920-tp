@@ -37,7 +37,7 @@ Usamos esta ferramenta para verificar de forma local, em cada estado, que açõe
 ![O estado $Ct_0$ apenas permite as ações $zr$, que volta para o mesmo estado, e $up$, que passa para o estado $Ct_1$.](lpsxsim0.png)
 
 
-![Qualquer estado $Ct_n$, com $1<n<9$, permite as ações $up$, que transita para $Ct_{n+1}$, e $dw$, que transita para $Ct_{n-1}$.](lpsxsim1.png)
+![Qualquer estado $Ct_n$, com $1 < n < 9$, permite as ações $up$, que transita para $Ct_{n+1}$, e $dw$, que transita para $Ct_{n-1}$.](lpsxsim1.png)
 
 ![O estado $Ct_{10}$ apenas permite a ação $dw$ que transita para $Ct_9$.](lpsxsim10.png)
 
@@ -51,9 +51,23 @@ Esta ferramenta permite-nos verificar as ações possíveis de realizar em cada 
 
 ![ltsview $Ct_{10}$](ltsview10.png)
 
+\pagebreak
+
 ## Questão 2
 
-(trivial)
+Os processos $C^n$ e $Ct_n$ ($n \in \mathbb{N}$) sao deterministas pois $\forall\ p \in S, a \in N : \exists! q \in S : (p, a, q) \in \rightarrow$, e como tal, $C^n ~ Ct_n \Leftrightarrow Tr(C^n) = Tr(Ct_n)$.
+
+Caso $n = 0$:
+ :  $$Tr(C^n) = Tr(Ct_n)$$
+    $$\Leftrightarrow \{\ def\ Tr\ \}$$
+    $$\{\epsilon\} \cup zr \cdot Tr(C^n) \cup up \cdot Tr(C^{n+1}) = \{\epsilon\} \cup zr \cdot Tr(Ct_n) \cup up \cdot Tr(Ct_{n+1})$$
+
+Caso $n > 0$:
+ :  $$Tr(C^n) = Tr(Ct_n)$$
+    $$\Leftrightarrow \{\ def\ Tr\ \}$$
+    $$\{\epsilon\} \cup dw \cdot Tr(C^{n-1}) \cup up \cdot Tr(C^{n+1}) = \{\epsilon\} \cup dw \cdot Tr(Ct_{n-1}) \cup up \cdot Tr(Ct_{n+1})$$
+
+Assim, o caso $n = 0$ é provado à custa do caso $n = 1$, e todos os casos $n > 0$ são provados à custa dos casos $n-1$ e $n+1$. Como o conjunto dos naturais é infinito, esta prova é valida.
 
 ## Questão 3
 

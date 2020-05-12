@@ -3,12 +3,14 @@ PDF := $(MD:.md=.pdf)
 DEPS := $(MD) \
     contador.mcrl2
 
-TARGS := $(PDF) \
+TARGS := $(DEPS) $(PDF) \
     contador.lps \
     contador.lts \
     contador.mcrl2
 
 all: $(TARGS)
+
+report.md: lpsxsim0.png lpsxsim10.png lpsxsim1.png ltsgraph_contador.png ltsview0.png ltsview10.png ltsview3.png
 
 %.lps: %.mcrl2
 	mcrl22lps $< $@

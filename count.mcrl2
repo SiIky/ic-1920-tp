@@ -1,0 +1,12 @@
+act 
+
+proc
+    C = up.(C-C) + dw.P
+    P = d.C + z.Z
+    Z = up.(C-Z) + zr.Z
+
+    CC = block({u',d',z'}, up.CC + dw.P || u'.CC + dw.P ) 
+    CZ = block({u',d',z'}, up.CC + dw.P || u'.CZ + z'.Z )
+
+init
+

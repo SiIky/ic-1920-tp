@@ -3,6 +3,7 @@ MD := report.md
 MCRL2 := \
     contador.mcrl2 \
     simple_c.mcrl2 \
+    zo.mcrl2 \
 
 PDF := $(MD:.md=.pdf)
 LTS := $(MCRL2:.mcrl2=.lts)

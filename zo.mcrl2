@@ -4,13 +4,27 @@ act dw, up, zr,
     ;
 
 proc
+    %C = zr . C + up . dw . C ;
+
+    %C0 = rename({zr->zr0,           dw->m01'}, C);
     C0 = zr0 . C0 + up . m01' . C0 ;
+
+    %C1 = rename({zr->zr1, up->m01', dw->m12'}, C);
     C1 = zr1 . C1 + m01' . m12' . C1 ;
+
+    %C2 = rename({zr->zr2, up->m12'},           C);
     C2 = zr2 . C2 + m12' . dw . C2 ;
 
-init allow({up, dw, zr},
-        comm({zr0|zr1|zr2->zr,
-           m01'|m01'->m01,
-           m12'|m12'->m12},
-           C0||C1||C2))
+init
+    hide({m01, m12},
+        allow({up, dw, zr, m01, m12},
+            comm({
+                  zr0|zr1|zr2->zr,
+                  m01'|m01'->m01,
+                  m12'|m12'->m12
+                 },
+                 C0||C1||C2
+            )
+        )
+    )
     ;

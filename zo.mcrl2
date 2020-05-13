@@ -8,8 +8,9 @@ proc
     C1 = zr1 . C1 + m01' . m12' . C1 ;
     C2 = zr2 . C2 + m12' . dw . C2 ;
 
-init comm({zr0|zr1|zr2->zr,
+init allow({up, dw, zr},
+        comm({zr0|zr1|zr2->zr,
            m01'|m01'->m01,
            m12'|m12'->m12},
-           C0||C1||C2)
+           C0||C1||C2))
     ;

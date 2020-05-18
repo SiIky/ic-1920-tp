@@ -71,13 +71,23 @@ Tanto no caso $n = 0$, como no caso $n > 0$, existe uma dependência do caso seg
 
 ## Questão 3
 
-fácil
+A ferramenta mCRL2 não permite implementar a versão genérica, descrita no enunciado, dos processos $C$, $P$, e $Z$, portanto não será possível verificar a igualdade dos dois modelos com a ferramenta. No entanto, é possível implementar uma versão mais restrita e finita de $C$ e $Ct$, e verificar a igualdade entre estes dois modelos.
+
+**TODO:** ver o `zo.mcrl2`
 
 ## Questão 4
 
+### Alínea _a_
+
+### Alínea _b_
+
 ## Questão 5
 
-e era
+### Alínea _a_
+
+**TODO:** adaptar o `zo.mcrl2`
+
+### Alínea _b_
 
 ## Referências
 

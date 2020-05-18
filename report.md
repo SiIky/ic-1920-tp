@@ -34,22 +34,22 @@ Usamos esta ferramenta de forma a verificar o  grafo de transição do processo.
 
 Usamos esta ferramenta para verificar de forma local, em cada estado, que ações são possíveis de realizar.
 
-![O estado $Ct_0$ apenas permite as ações $zr$, que volta para o mesmo estado, e $up$, que passa para o estado $Ct_1$.](lpsxsim0.png)
+![lpsxsim - O estado $Ct_0$ apenas permite as ações $zr$, que volta para o mesmo estado, e $up$, que passa para o estado $Ct_1$.](lpsxsim0.png)
 
 
-![Qualquer estado $Ct_n$, com $1 < n < 9$, permite as ações $up$, que transita para $Ct_{n+1}$, e $dw$, que transita para $Ct_{n-1}$.](lpsxsim1.png)
+![lpsxsim - Qualquer estado $Ct_n$, com $1 < n < 9$, permite as ações $up$, que transita para $Ct_{n+1}$, e $dw$, que transita para $Ct_{n-1}$.](lpsxsim1.png)
 
-![O estado $Ct_{10}$ apenas permite a ação $dw$ que transita para $Ct_9$.](lpsxsim10.png)
+![lpsxsim - O estado $Ct_{10}$ apenas permite a ação $dw$ que transita para $Ct_9$.](lpsxsim10.png)
 
 ### ltsview
 
 Esta ferramenta permite-nos verificar as ações possíveis de realizar em cada estado, como com lpsxsim, acrescentando uma parte gráfica em 3D ajudando na percepção da mesma.
 
-![ltsview $Ct_0$](ltsview0.png)
+![ltsview - $Ct_0$](ltsview0.png)
 
-![ltsview $Ct_3$](ltsview3.png)
+![ltsview - $Ct_3$](ltsview3.png)
 
-![ltsview $Ct_{10}$](ltsview10.png)
+![ltsview - $Ct_{10}$](ltsview10.png)
 
 \pagebreak
 
@@ -76,10 +76,37 @@ A ferramenta mCRL2 não permite implementar a versão genérica, descrita no enu
 **TODO:** ver o `zo.mcrl2`
 
 ## Questão 4
+Iremos apresentar propriedades de segurança e animação sobre o processo $Ct_m$.
 
 ### Alínea _a_
 
+#### Propriedades de Segurança
+
+1. __[true*.up.zr]false__ 
+Impossível fazer transição por  up seguida de zr.  
+
+2. __[true*]<true>true__ 
+Qualquer sequência de ações chega sempre a um estado que tem a possibilidade de fazer mais uma ação, i.e., ausência de deadlock.
+
+3. __[true*.zr.dw]false__ 
+Impossível haver uma transição por zr seguida de dw.
+
+
+#### Propriedades de Animação
+
+1. __[up]<dw>true__  
+Depois de aumentar o contador com a ação up, podemos sempre decrementar com a ação dw.
+
+2. __[zr+]<zr+up>true__
+Após um ou mais zr pode ser feito um zr ou um up.
+
+3. __[up.up]<dw><dw>true__
+Após duas transições seguidas por up é sempre possível duas transições seguidas por dw.
+
+
 ### Alínea _b_
+
+![Após criar um ficheiro mcf com a respectiva propriedade temporal, a cada um aplicamos as ferramentas lps2pbes e pbes2bool para verificar a validade da propriedade. Como se pode verificar todas deram true pelo que se verifica que são válidas.](temporalproperties.png)
 
 ## Questão 5
 

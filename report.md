@@ -55,7 +55,7 @@ Esta ferramenta permite-nos verificar as ações possíveis de realizar em cada 
 
 ## Questão 2
 
-Os processos $C^n$ e $Ct_n$ ($n \in \mathbb{N}$) sao deterministas pois $\forall\ p \in S, a \in N : \exists! q \in S : (p, a, q) \in \rightarrow$, e como tal, $Tr(C^n) = Tr(Ct_n) \Leftrightarrow C^n \sim Ct_n \Rightarrow C^n = Ct_n$. Portanto a nossa prova é a de igualdade dos traços de $C^n$ e de $Ct_n$.
+Os processos $C^n$ e $Ct_n$ ($n \in \mathbb{N}$) sao deterministas pois $\forall\ p \in S, a \in N : \exists! q \in S : (p, a, q) \in \rightarrow$ [^lts_determinism], e como tal, $Tr(C^n) = Tr(Ct_n) \Leftrightarrow C^n \sim Ct_n \Rightarrow C^n = Ct_n$. Portanto a nossa prova é a de igualdade dos traços de $C^n$ e de $Ct_n$.
 
 Caso $n = 0$:
  :  $$Tr(C^n) = Tr(Ct_n)$$
@@ -67,9 +67,7 @@ Caso $n > 0$:
     $$\Leftrightarrow \{\ def\ Tr\ \}$$
     $$\{\epsilon\} \cup dw \cdot Tr(C^{n-1}) \cup up \cdot Tr(C^{n+1}) = \{\epsilon\} \cup dw \cdot Tr(Ct_{n-1}) \cup up \cdot Tr(Ct_{n+1})$$
 
-Tanto no caso $n = 0$, como no caso $n > 0$, existe uma dependência do caso seguinte, $n + 1$;
-
-~~Assim, o caso $n = 0$ é provado à custa do caso $n = 1$, e todos os casos $n > 0$ são provados à custa dos casos $n-1$ e $n+1$. Como o conjunto dos naturais é infinito, esta prova é valida.~~
+Tanto no caso $n = 0$, como no caso $n > 0$, existe uma dependência do caso seguinte, $n + 1$; no entanto, este caso $n + 1$ pode ser provado de forma similar, e portanto a prova é válida.
 
 ## Questão 3
 
@@ -83,6 +81,8 @@ e era
 
 ## Referências
 
- * [Labelled transition systems: Determinism][lts_determinism]
+ * [_Labelled transition systems: Determinism_][lts_determinism]
+
+[^lts_determinism]: Ver [_Labelled transition systems: Determinism_][lts_determinism]
 
 [lts_determinism]: https://www.mcrl2.org/web/user_manual/articles/lts.html#determinism

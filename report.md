@@ -81,7 +81,7 @@ Iremos apresentar propriedades de segurança e animação sobre o processo $Ct_m
  2. `[true*]<true>true` -- Qualquer sequência de ações chega sempre a um estado que tem a possibilidade de fazer mais uma ação, i.e., ausência de deadlock.
  3. `[true*.zr.dw]false` -- Impossível haver uma transição por zr seguida de dw.
 
- #### Propriedades de Animação
+#### Propriedades de Animação
 
  1. `[up]<dw>true` -- Depois de aumentar o contador com a ação up, podemos sempre decrementar com a ação dw.
  2. `[zr+]<zr+up>true` -- Após um ou mais zr pode ser feito um zr ou um up.

@@ -36,4 +36,4 @@ watch:
 clean:
 	$(RM) $(TARGS)
 
-.PHONY: all watch
+.PHONY: all clean watch

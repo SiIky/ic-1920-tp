@@ -67,9 +67,9 @@ Tanto no caso $n = 0$, como no caso $n > 0$, existe uma dependência do caso seg
 
 A ferramenta mCRL2 não permite implementar a versão genérica, descrita no enunciado, dos processos $C$, $P$, e $Z$, portanto não será possível verificar a igualdade dos dois modelos com a ferramenta. No entanto, é possível implementar uma versão mais restrita e finita de $C$ e $Ct$, e verificar a igualdade entre estes dois modelos.
 
-`ltscompare -e bisim-gv zo.lts contador.lts`
+`ltscompare -e bisim-gv Ctm.lts Cm.lts`{.sh}
 
-**TODO:** ver o `zo.mcrl2`
+**TODO:** ver o `Cm.mcrl2`
 
 ## Questão 4
 
@@ -79,15 +79,15 @@ Iremos apresentar propriedades de segurança e animação sobre o processo $Ct_m
 
 #### Propriedades de Segurança
 
- 1. `[true*.up.zr]false` -- Impossível fazer transição por  up seguida de zr.
+ 1. `[true*.up.zr]false` -- Impossível fazer transição por $up$ seguida de $zr$.
  2. `[true*]<true>true` -- Qualquer sequência de ações chega sempre a um estado que tem a possibilidade de fazer mais uma ação, i.e., ausência de deadlock.
- 3. `[true*.zr.dw]false` -- Impossível haver uma transição por zr seguida de dw.
+ 3. `[true*.zr.dw]false` -- Impossível haver uma transição por $zr$ seguida de $dw$.
 
 #### Propriedades de Animação
 
- 1. `[up]<dw>true` -- Depois de aumentar o contador com a ação up, podemos sempre decrementar com a ação dw.
- 2. `[zr+]<zr+up>true` -- Após um ou mais zr pode ser feito um zr ou um up.
- 3. `[up.up]<dw><dw>true` -- Após duas transições seguidas por up é sempre possível duas transições seguidas por dw.
+ 1. `[up]<dw>true` -- Depois de aumentar o contador com a ação $up$, podemos sempre decrementar com a ação $dw$.
+ 2. `[zr+]<zr+up>true` -- Após um ou mais $zr$ pode ser feito um $zr$ ou um $up$.
+ 3. `[up.up]<dw><dw>true` -- Após duas transições seguidas por $up$ é sempre possível duas transições seguidas por $dw$.
 
 ### Alínea _b_
 
@@ -97,7 +97,7 @@ Iremos apresentar propriedades de segurança e animação sobre o processo $Ct_m
 
 ### Alínea _a_
 
-**TODO:** adaptar o `zo.mcrl2`
+**TODO:** adaptar o `Cm.mcrl2`
 
 ### Alínea _b_
 

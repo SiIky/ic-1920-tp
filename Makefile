@@ -3,7 +3,8 @@ MAXSTATES := 10
 MD := report.md
 
 MCRL2 := \
-    Cm.mcrl \
+    Carco.mcrl2 \
+    Cm.mcrl2 \
     Ctm.mcrl2 \
     simple_c.mcrl2 \
 

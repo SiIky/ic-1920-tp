@@ -1,0 +1,23 @@
+act z1,z2,z,d1,d2,d,up,dw,zr,stop,dw1,dw2,up1;
+
+proc
+    Z = up.C1 + zr.Z;
+    C1 = hide({z},
+            allow({z,up,dw},
+                comm(
+                    {z1|z2 -> z, dw1|dw2 -> dw, up1|up1 -> up}, 
+                    ((up1.C2) + (dw1.z1.Z)) || ((up1.C2) + (dw2.z2.stop))
+            )
+        )
+            );
+
+    C2 = hide({d,z},
+            allow({z,d,dw},
+                 comm(
+                    {d1|d2 -> d, z1|z2 -> z , dw1|dw2 -> dw},
+                    (dw1.d1.z1.C1 || dw2.d2.z2.stop)
+                    )
+            )
+        );
+init
+    Z;

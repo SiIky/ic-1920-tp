@@ -1,3 +1,5 @@
+MAXSTATES := 10
+
 MD := report.md
 
 MCRL2 := \
@@ -11,22 +13,27 @@ LPS := $(MCRL2:.mcrl2=.lps)
 
 DEPS := $(MD) $(MCRL2)
 
-TARGS := $(DEPS) $(PDF) $(MCRL2) $(LTS) $(LPS)
+TARGS := $(PDF) $(LTS) $(LPS)
 
-all: $(TARGS)
+ALL := $(DEPS) $(TARGS)
 
-report.md: lpsxsim0.png lpsxsim10.png lpsxsim1.png ltsgraph_contador.png ltsview0.png ltsview10.png ltsview3.png
+all: $(ALL)
+
+report.md: lpsxsim0.png lpsxsim10.png lpsxsim1.png ltsgraph_contador.png ltsview0.png ltsview10.png ltsview3.png temporalProperties.png
 
 %.lps: %.mcrl2
 	mcrl22lps $< $@
 
 %.lts: %.lps
-	lps2lts $< $@
+	lps2lts -l $(MAXSTATES) $< $@
 
 %.pdf: %.md
-	pandoc -f markdown -t latex $< -o $@
+	pandoc -s -f markdown -t latex $< -o $@
 
 watch:
 	ls -1 $(DEPS) | entr -c make
+
+clean:
+	$(RM) $(TARGS)
 
 .PHONY: all watch

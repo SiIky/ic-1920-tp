@@ -7,19 +7,13 @@ De forma a ser viável a apresentação com as ferramentas utilizadas colocamos 
 
 ```mcrl2
 act up, zr, dw;
-map N: Int;
-eqn N = 10;
 
-proc
-    Ct(n: Int) =
-            (n > 0)
-               -> (dw . Ct(pred(n))
-                  + ((n < N) -> up . Ct(succ(n))))
+proc Ct(n: Int) = (n > 0)
+               -> (dw . Ct(pred(n)) + up . Ct(succ(n)))
                <> (up . Ct(1) + zr . Ct(0))
     ;
 
-init
-    Ct(0);
+init Ct(0);
 ```
 
 Utilizámos as ferramentas `lpsxsim`, `ltsgraph` e `ltsview` para observar o comportamento deste processo.
@@ -76,37 +70,26 @@ A ferramenta mCRL2 não permite implementar a versão genérica, descrita no enu
 **TODO:** ver o `zo.mcrl2`
 
 ## Questão 4
+
 Iremos apresentar propriedades de segurança e animação sobre o processo $Ct_m$.
 
 ### Alínea _a_
 
 #### Propriedades de Segurança
 
-1. __[true*.up.zr]false__ 
-Impossível fazer transição por  up seguida de zr.  
+ 1. `[true*.up.zr]false` -- Impossível fazer transição por  up seguida de zr.
+ 2. `[true*]<true>true` -- Qualquer sequência de ações chega sempre a um estado que tem a possibilidade de fazer mais uma ação, i.e., ausência de deadlock.
+ 3. `[true*.zr.dw]false` -- Impossível haver uma transição por zr seguida de dw.
 
-2. __[true*]<true>true__ 
-Qualquer sequência de ações chega sempre a um estado que tem a possibilidade de fazer mais uma ação, i.e., ausência de deadlock.
+ #### Propriedades de Animação
 
-3. __[true*.zr.dw]false__ 
-Impossível haver uma transição por zr seguida de dw.
-
-
-#### Propriedades de Animação
-
-1. __[up]<dw>true__  
-Depois de aumentar o contador com a ação up, podemos sempre decrementar com a ação dw.
-
-2. __[zr+]<zr+up>true__
-Após um ou mais zr pode ser feito um zr ou um up.
-
-3. __[up.up]<dw><dw>true__
-Após duas transições seguidas por up é sempre possível duas transições seguidas por dw.
-
+ 1. `[up]<dw>true` -- Depois de aumentar o contador com a ação up, podemos sempre decrementar com a ação dw.
+ 2. `[zr+]<zr+up>true` -- Após um ou mais zr pode ser feito um zr ou um up.
+ 3. `[up.up]<dw><dw>true` -- Após duas transições seguidas por up é sempre possível duas transições seguidas por dw.
 
 ### Alínea _b_
 
-![Após criar um ficheiro mcf com a respectiva propriedade temporal, a cada um aplicamos as ferramentas lps2pbes e pbes2bool para verificar a validade da propriedade. Como se pode verificar todas deram true pelo que se verifica que são válidas.](temporalproperties.png)
+![Após criar um ficheiro mcf com a respectiva propriedade temporal, a cada um aplicamos as ferramentas lps2pbes e pbes2bool para verificar a validade da propriedade. Como se pode verificar todas deram true pelo que se verifica que são válidas.](temporalProperties.png)
 
 ## Questão 5
 

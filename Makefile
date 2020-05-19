@@ -3,16 +3,15 @@ MAXSTATES := 10
 MD := report.md
 
 MCRL2 := \
-    contador.mcrl2 \
+    Cm.mcrl \
+    Ctm.mcrl2 \
     simple_c.mcrl2 \
-    zo.mcrl2 \
 
 PDF := $(MD:.md=.pdf)
 LTS := $(MCRL2:.mcrl2=.lts)
 LPS := $(MCRL2:.mcrl2=.lps)
 
 DEPS := $(MD) $(MCRL2)
-
 TARGS := $(PDF) $(LTS) $(LPS)
 
 ALL := $(DEPS) $(TARGS)

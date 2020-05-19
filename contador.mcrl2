@@ -1,8 +1,0 @@
-act up, zr, dw;
-
-proc Ct(n: Int) = (n > 0)
-               -> (dw . Ct(pred(n)) + up . Ct(succ(n)))
-               <> (up . Ct(1) + zr . Ct(0))
-    ;
-
-init Ct(0);

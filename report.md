@@ -67,6 +67,8 @@ Tanto no caso $n = 0$, como no caso $n > 0$, existe uma dependência do caso seg
 
 A ferramenta mCRL2 não permite implementar a versão genérica, descrita no enunciado, dos processos $C$, $P$, e $Z$, portanto não será possível verificar a igualdade dos dois modelos com a ferramenta. No entanto, é possível implementar uma versão mais restrita e finita de $C$ e $Ct$, e verificar a igualdade entre estes dois modelos.
 
+`ltscompare -e bisim-gv zo.lts contador.lts`
+
 **TODO:** ver o `zo.mcrl2`
 
 ## Questão 4

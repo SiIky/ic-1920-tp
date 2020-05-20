@@ -1,0 +1,4 @@
+mu P(len: Nat = 0) .
+    forall x:Bool .
+       (val(len == 3) && <enqueue(x)> false)
+    || (val(len < 3) && <tau* . enqueue(x)> P(len+1))

@@ -9,27 +9,28 @@ MCRL2 := \
     queue.mcrl2 \
     simple_c.mcrl2 \
 
-PDF := $(MD:.md=.pdf)
-LTS := $(MCRL2:.mcrl2=.lts)
+PBES := \
+    Ctm_liveness1.pbes \
+    Ctm_liveness2.pbes \
+    Ctm_liveness3.pbes \
+    Ctm_safety1.pbes \
+    Ctm_safety2.pbes \
+    Ctm_safety3.pbes \
+    queue_qsafety1.pbes \
+    queue_qsafety2.pbes \
+
 LPS := $(MCRL2:.mcrl2=.lps)
+LTS := $(MCRL2:.mcrl2=.lts)
+PDF := $(MD:.md=.pdf)
+PROPS := $(PBES:.pbes=.prop)
 
 DEPS := $(MD) $(MCRL2)
-TARGS := $(PDF) $(LTS) $(LPS)
-
+TARGS := $(PDF) $(LTS) $(LPS) $(PBES)
 ALL := $(DEPS) $(TARGS)
 
-PROPS := \
-    Ctm_liveness1.prop \
-    Ctm_liveness2.prop \
-    Ctm_liveness3.prop \
-    Ctm_safety1.prop \
-    Ctm_safety2.prop \
-    Ctm_safety3.prop \
-
-all: $(ALL) props
+all: $(ALL)
 
 props: $(PROPS)
-	cat $(PROPS)
 
 report.md: lpsxsim0.png lpsxsim10.png lpsxsim1.png ltsgraph_contador.png ltsview0.png ltsview10.png ltsview3.png temporalProperties.png
 
@@ -49,7 +50,7 @@ watch:
 	ls -1 $(DEPS) | entr -c make
 
 %.prop: %.pbes
-	pbes2bool $< > $@
+	pbes2bool $<
 
 Ctm_liveness1.pbes: liveness1.mcf Ctm.lps
 	lps2pbes --formula=liveness1.mcf Ctm.lps $@
@@ -68,6 +69,12 @@ Ctm_safety2.pbes: safety2.mcf Ctm.lps
 
 Ctm_safety3.pbes: safety3.mcf Ctm.lps
 	lps2pbes --formula=safety3.mcf Ctm.lps $@
+
+queue_qsafety1.pbes: qsafety1.mcf queue.lps
+	lps2pbes --formula=qsafety1.mcf queue.lps $@
+
+queue_qsafety2.pbes: qsafety2.mcf queue.lps
+	lps2pbes --formula=qsafety2.mcf queue.lps $@
 
 clean:
 	$(RM) $(TARGS)

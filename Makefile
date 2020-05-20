@@ -53,28 +53,28 @@ watch:
 	pbes2bool $<
 
 Ctm_liveness1.pbes: liveness1.mcf Ctm.lps
-	lps2pbes --formula=liveness1.mcf Ctm.lps $@
+	lps2pbes -f $^ $@
 
 Ctm_liveness2.pbes: liveness2.mcf Ctm.lps
-	lps2pbes --formula=liveness2.mcf Ctm.lps $@
+	lps2pbes -f $^ $@
 
 Ctm_liveness3.pbes: liveness3.mcf Ctm.lps
-	lps2pbes --formula=liveness3.mcf Ctm.lps $@
+	lps2pbes -f $^ $@
 
 Ctm_safety1.pbes: safety1.mcf Ctm.lps
-	lps2pbes --formula=safety1.mcf Ctm.lps $@
+	lps2pbes -f $^ $@
 
 Ctm_safety2.pbes: safety2.mcf Ctm.lps
-	lps2pbes --formula=safety2.mcf Ctm.lps $@
+	lps2pbes -f $^ $@
 
 Ctm_safety3.pbes: safety3.mcf Ctm.lps
-	lps2pbes --formula=safety3.mcf Ctm.lps $@
+	lps2pbes -f $^ $@
 
 queue_qsafety1.pbes: qsafety1.mcf queue.lps
-	lps2pbes --formula=qsafety1.mcf queue.lps $@
+	lps2pbes -f $^ $@
 
 queue_qsafety2.pbes: qsafety2.mcf queue.lps
-	lps2pbes --formula=qsafety2.mcf queue.lps $@
+	lps2pbes -f $^ $@
 
 clean:
 	$(RM) $(TARGS)

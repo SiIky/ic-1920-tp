@@ -1,22 +1,22 @@
 act 
-    zr0, zr1, zr2, zr ;
-    m01, m12, m01', m12', up, dw : Bool ;
+    empty0, empty1, empty2, empty ;
+    m01, m12, m01', m12', enqueue, dequeue : Bool ;
 
 proc
-    C = sum n: Bool . (zr . C + up(n) . dw(n) . C) ;
-    C0 = rename({zr->zr0,           dw->m01'}, C);
-    C1 = rename({zr->zr1, up->m01', dw->m12'}, C);
-    C2 = rename({zr->zr2, up->m12'},           C);
+    C = sum n: Bool . (empty . C + enqueue(n) . dequeue(n) . C) ;
+    C0 = rename({empty->empty0,           dequeue->m01'}, C);
+    C1 = rename({empty->empty1, enqueue->m01', dequeue->m12'}, C);
+    C2 = rename({empty->empty2, enqueue->m12'},           C);
 
-    %C0 = sum n: Bool . zr0 . C0 + up(n) . m01'(n) . C0 ;
-    %C1 = sum n: Bool . zr1 . C1 + m01'(n) . m12'(n) . C1 ;
-    %C2 = sum n: Bool . zr2 . C2 + m12'(n) . dw(n) . C2 ;
+    %C0 = sum n: Bool . empty0 . C0 + enqueue(n) . m01'(n) . C0 ;
+    %C1 = sum n: Bool . empty1 . C1 + m01'(n) . m12'(n) . C1 ;
+    %C2 = sum n: Bool . empty2 . C2 + m12'(n) . dequeue(n) . C2 ;
 
 init
     hide({m01, m12},
-        allow({up, dw, zr, m01, m12},
+        allow({enqueue, dequeue, empty, m01, m12},
             comm({
-                  zr0|zr1|zr2->zr,
+                  empty0|empty1|empty2->empty,
                   m01'|m01'->m01,
                   m12'|m12'->m12
                  },

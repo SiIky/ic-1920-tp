@@ -1,1 +1,1 @@
-[up(true)]<tau*><dw(true) + dw(false)>true
+[enqueue(true)]<tau*><dequeue(true) + dequeue(false)>true

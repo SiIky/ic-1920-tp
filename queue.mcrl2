@@ -1,4 +1,4 @@
-act 
+act
     empty0, empty1, empty2, empty ;
     m01, m12, m01', m12', enqueue, dequeue : Bool ;
 

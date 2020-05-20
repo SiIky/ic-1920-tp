@@ -97,7 +97,31 @@ Iremos apresentar propriedades de segurança e animação sobre o processo $Ct_m
 
 ### Alínea _a_
 
-**TODO:** adaptar o `Cm.mcrl2`
+```mcrl2
+act
+    empty0, empty1, empty2, empty ;
+    m01, m12, m01', m12', enqueue, dequeue : Bool ;
+
+proc
+    C = sum n: Bool . (empty . C + enqueue(n) . dequeue(n) . C) ;
+    C0 = rename({empty->empty0, dequeue->m01'}, C);
+    C1 = rename({empty->empty1, enqueue->m01', dequeue->m12'}, C);
+    C2 = rename({empty->empty2, enqueue->m12'}, C);
+
+init
+    hide({m01, m12},
+        allow({enqueue, dequeue, empty, m01, m12},
+            comm({
+                  empty0|empty1|empty2->empty,
+                  m01'|m01'->m01,
+                  m12'|m12'->m12
+                 },
+                 C0||C1||C2
+            )
+        )
+    )
+    ;
+```
 
 ### Alínea _b_
 

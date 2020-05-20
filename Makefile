@@ -18,7 +18,18 @@ TARGS := $(PDF) $(LTS) $(LPS)
 
 ALL := $(DEPS) $(TARGS)
 
-all: $(ALL)
+PROPS := \
+    Ctm_liveness1.prop \
+    Ctm_liveness2.prop \
+    Ctm_liveness3.prop \
+    Ctm_safety1.prop \
+    Ctm_safety2.prop \
+    Ctm_safety3.prop \
+
+all: $(ALL) props
+
+props: $(PROPS)
+	cat $(PROPS)
 
 report.md: lpsxsim0.png lpsxsim10.png lpsxsim1.png ltsgraph_contador.png ltsview0.png ltsview10.png ltsview3.png temporalProperties.png
 
@@ -37,7 +48,28 @@ Ctm.lts: Ctm.lps
 watch:
 	ls -1 $(DEPS) | entr -c make
 
+%.prop: %.pbes
+	pbes2bool $< > $@
+
+Ctm_liveness1.pbes: liveness1.mcf Ctm.lps
+	lps2pbes --formula=liveness1.mcf Ctm.lps $@
+
+Ctm_liveness2.pbes: liveness2.mcf Ctm.lps
+	lps2pbes --formula=liveness2.mcf Ctm.lps $@
+
+Ctm_liveness3.pbes: liveness3.mcf Ctm.lps
+	lps2pbes --formula=liveness3.mcf Ctm.lps $@
+
+Ctm_safety1.pbes: safety1.mcf Ctm.lps
+	lps2pbes --formula=safety1.mcf Ctm.lps $@
+
+Ctm_safety2.pbes: safety2.mcf Ctm.lps
+	lps2pbes --formula=safety2.mcf Ctm.lps $@
+
+Ctm_safety3.pbes: safety3.mcf Ctm.lps
+	lps2pbes --formula=safety3.mcf Ctm.lps $@
+
 clean:
 	$(RM) $(TARGS)
 
-.PHONY: all clean watch
+.PHONY: all clean props watch

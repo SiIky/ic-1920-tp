@@ -3,9 +3,10 @@ MAXSTATES := 10
 MD := report.md
 
 MCRL2 := \
-    Carco.mcrl2 \
     Cm.mcrl2 \
     Ctm.mcrl2 \
+    buffers.mcrl2 \
+    queue.mcrl2 \
     simple_c.mcrl2 \
 
 PDF := $(MD:.md=.pdf)
@@ -24,8 +25,11 @@ report.md: lpsxsim0.png lpsxsim10.png lpsxsim1.png ltsgraph_contador.png ltsview
 %.lps: %.mcrl2
 	mcrl22lps $< $@
 
+Ctm.lts: Ctm.lps
+	lps2lts -l $(MAXSTATES) Ctm.lps Ctm.lts
+
 %.lts: %.lps
-	lps2lts -l $(MAXSTATES) $< $@
+	lps2lts $< $@
 
 %.pdf: %.md
 	pandoc -s -f markdown -t latex $< -o $@

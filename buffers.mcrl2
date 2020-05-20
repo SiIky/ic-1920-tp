@@ -1,0 +1,10 @@
+act inn, outt, ia, ib, oa, ob, c : Bool;
+
+proc
+    BufferS = sum n: Bool . inn(n) . outt(n) . BufferS;
+    BufferA = rename({inn -> ia, outt -> oa}, BufferS);
+    BufferB = rename({inn -> ib, outt -> ob}, BufferS);
+
+    S = allow({ia, ob, c}, comm({oa|ib -> c}, BufferA || BufferB));
+
+init hide({c}, S);

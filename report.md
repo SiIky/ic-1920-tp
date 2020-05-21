@@ -49,9 +49,9 @@ Esta ferramenta permite-nos verificar as ações possíveis de realizar em cada 
 Os processos $C^n$ e $Ct_n$ ($n \in \mathbb{N}$) sao deterministas pois $\forall\ p \in S, a \in N : \exists! q \in S : (p, a, q) \in \rightarrow$[^lts_determinism], e como tal, $Tr(C^n) = Tr(Ct_n) \Leftrightarrow C^n \sim Ct_n \Rightarrow C^n = Ct_n$. Portanto a nossa prova é a de igualdade dos traços de $C^n$ e de $Ct_n$.
 
 Caso $n = 0$:
- :  $$Tr(C^n) = Tr(Ct_n)$$
+ :  $$Tr(C^0) = Tr(Ct_0)$$
     $$\Leftrightarrow \{\ def\ Tr\ \}$$
-    $$\{\epsilon\} \cup zr \cdot Tr(C^n) \cup up \cdot Tr(C^{n+1}) = \{\epsilon\} \cup zr \cdot Tr(Ct_n) \cup up \cdot Tr(Ct_{n+1})$$
+    $$\{\epsilon\} \cup zr \cdot Tr(C^0) \cup up \cdot Tr(C^{1}) = \{\epsilon\} \cup zr \cdot Tr(Ct_0) \cup up \cdot Tr(Ct_{1})$$
 
 Caso $n > 0$:
  :  $$Tr(C^n) = Tr(Ct_n)$$
@@ -140,7 +140,7 @@ false	trace
 true	weak-trace
 ```
 
-De notar que são equivalentes pelos critérios de Bissimulação Fraca (`weak-bisim`) e comparação fraca de traços (`weak-trace`).
+De notar que são equivalentes pelos critérios de Bissimulação Fraca (`weak-bisim`) e comparação fraca de traços (`weak-trace`), estudados nas aulas, e ainda pelos critérios de Bissimulação Ramificada[^branching_bisimulation] (`branching-bisim`), e com a propriedade de Preservação de Divergência[^divergence_preserving] (os métodos com o prefixo `dp`).
 
 ## Questão 4
 
@@ -175,40 +175,43 @@ $\forall n \in \mathbb{N},  Ct_n \in \{ Ct_n |  n>=0 \}$, logo $Ct_n \vDash$ `<u
 ### Alínea _a_
 
 ```mcrl2
-act
-    empty0, empty1, empty2, empty ;
+act empty0, empty1, empty2, empty ;
     m01, m12, m01', m12', enqueue, dequeue : Bool ;
-
 proc
     C = sum n: Bool . (empty . C + enqueue(n) . dequeue(n) . C) ;
     C0 = rename({empty->empty0, dequeue->m01'}, C);
     C1 = rename({empty->empty1, enqueue->m01', dequeue->m12'}, C);
     C2 = rename({empty->empty2, enqueue->m12'}, C);
-
-init
-    hide({m01, m12},
+init hide({m01, m12},
         allow({enqueue, dequeue, empty, m01, m12},
             comm({
                   empty0|empty1|empty2->empty,
                   m01'|m01'->m01,
                   m12'|m12'->m12
                  },
-                 C0||C1||C2
-            )
-        )
-    )
-    ;
+                 C0||C1||C2)));
 ```
 
 ### Alínea _b_
 
 ## Referências
 
+ * [_Labelled transition systems: Branching Bisimilarity_]
  * [_Labelled transition systems: Determinism_]
  * [_Process Algebra_]
+ * [_Rooted Divergence-Preserving Branching Bisimilarity is a Congruence_][rooted_divergence_preserving_branching_bisimilarity]
+ * [_Strong, Weak and Branching Bisimulation for Transition Systems and Markov Reward Chains: A Unifying Matrix Approach_][strong_weak_branching_bisimulation]
+
+[^branching_bisimulation]: Ver [_Labelled transition systems: Branching Bisimilarity_], e [_Strong, Weak and Branching Bisimulation for Transition Systems and Markov Reward Chains: A Unifying Matrix Approach_][strong_weak_branching_bisimulation]
 
 [^buffers]: Ver slides [_Process Algebra_] (Ficheiro `IeC-PA1.pdf`)
+
 [^lts_determinism]: Ver [_Labelled transition systems: Determinism_]
 
+[^divergence_preserving]: Ver [_Rooted Divergence-Preserving Branching Bisimilarity is a Congruence_][rooted_divergence_preserving_branching_bisimilarity]
+
+[_Labelled transition systems: Branching Bisimilarity_]: https://www.mcrl2.org/web/user_manual/articles/lts.html#branching-bisimilarity
 [_Labelled transition systems: Determinism_]: https://www.mcrl2.org/web/user_manual/articles/lts.html#determinism
 [_Process Algebra_]: https://arca.di.uminho.pt/ic-1920/slides/IeC-PA2.pdf
+[rooted_divergence_preserving_branching_bisimilarity]: https://arxiv.org/abs/1801.01180
+[strong_weak_branching_bisimulation]: https://arxiv.org/abs/0912.1902

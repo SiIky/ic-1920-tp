@@ -5,6 +5,7 @@ MD := report.md
 MCRL2 := \
     Cm.mcrl2 \
     Ctm.mcrl2 \
+    Ctm_lim.mcrl2 \
     buffers.mcrl2 \
     queue.mcrl2 \
     simple_c.mcrl2 \
@@ -76,7 +77,10 @@ queue_qsafety1.pbes: qsafety1.mcf queue.lps
 queue_qsafety2.pbes: qsafety2.mcf queue.lps
 	lps2pbes -f $^ $@
 
+exe3: Ctm_lim.lts Cm.lts
+	./exe3.sh
+
 clean:
 	$(RM) $(TARGS)
 
-.PHONY: all clean props watch
+.PHONY: all clean exe3 props watch

@@ -7,12 +7,9 @@ De forma a ser viável a apresentação com as ferramentas utilizadas colocamos 
 
 ```mcrl2
 act up, zr, dw;
-
 proc Ct(n: Int) = (n > 0)
                -> (dw . Ct(pred(n)) + up . Ct(succ(n)))
-               <> (up . Ct(1) + zr . Ct(0))
-    ;
-
+               <> (up . Ct(1) + zr . Ct(0)) ;
 init Ct(0);
 ```
 
@@ -49,7 +46,7 @@ Esta ferramenta permite-nos verificar as ações possíveis de realizar em cada 
 
 ## Questão 2
 
-Os processos $C^n$ e $Ct_n$ ($n \in \mathbb{N}$) sao deterministas pois $\forall\ p \in S, a \in N : \exists! q \in S : (p, a, q) \in \rightarrow$ [^lts_determinism], e como tal, $Tr(C^n) = Tr(Ct_n) \Leftrightarrow C^n \sim Ct_n \Rightarrow C^n = Ct_n$. Portanto a nossa prova é a de igualdade dos traços de $C^n$ e de $Ct_n$.
+Os processos $C^n$ e $Ct_n$ ($n \in \mathbb{N}$) sao deterministas pois $\forall\ p \in S, a \in N : \exists! q \in S : (p, a, q) \in \rightarrow$[^lts_determinism], e como tal, $Tr(C^n) = Tr(Ct_n) \Leftrightarrow C^n \sim Ct_n \Rightarrow C^n = Ct_n$. Portanto a nossa prova é a de igualdade dos traços de $C^n$ e de $Ct_n$.
 
 Caso $n = 0$:
  :  $$Tr(C^n) = Tr(Ct_n)$$
@@ -67,9 +64,83 @@ Tanto no caso $n = 0$, como no caso $n > 0$, existe uma dependência do caso seg
 
 A ferramenta mCRL2 não permite implementar a versão genérica, descrita no enunciado, dos processos $C$, $P$, e $Z$, portanto não será possível verificar a igualdade dos dois modelos com a ferramenta. No entanto, é possível implementar uma versão mais restrita e finita de $C$ e $Ct$, e verificar a igualdade entre estes dois modelos.
 
-`ltscompare -e bisim-gv Ctm.lts Cm.lts`{.sh}
+Para fim exemplificativo, decidimos implementar uma versão de cada processo limitada a 3, i.e., um contador até 3.
 
-**TODO:** ver o `Cm.mcrl2`
+A implementação do processo $C$ é inspirada na implementação de buffers estudada nas aulas[^buffers], que consiste na composição paralela de várias células unárias, e é a seguinte:
+
+```mcrl2
+act dw, up, zr, zr0, zr1, zr2, m01', m12', m01, m12 ;
+proc
+    C = zr . C + up . dw . C ;
+    C0 = rename({zr->zr0,           dw->m01'}, C);
+    C1 = rename({zr->zr1, up->m01', dw->m12'}, C);
+    C2 = rename({zr->zr2, up->m12'},           C);
+init hide({m01, m12},
+        allow({up, dw, zr, m01, m12},
+            comm({zr0|zr1|zr2->zr,
+                  m01'|m01'->m01,
+                  m12'|m12'->m12 },
+                 C0||C1||C2)));
+```
+
+E do processo $Ct$:
+
+```mcrl2
+act up, zr, dw;
+map N : Int;
+eqn N = 3;
+proc Ct(n: Int) = (n > 0)
+               -> (dw . Ct(pred(n))
+                  + ((n < N) -> up . Ct(succ(n))))
+               <> (up . Ct(1) + zr . Ct(0));
+init Ct(0);
+```
+
+Correndo o comando que se segue, podemos testar a igualdade dos dois modelos para todos os critérios de equivalência suportados pela ferramenta:
+
+```sh
+for MET in \
+    bisim \
+    bisim-gv \
+    bisim-gjkw \
+    branching-bisim \
+    branching-bisim-gv \
+    branching-bisim-gjkw \
+    dpbranching-bisim \
+    dpbranching-bisim-gv \
+    dpbranching-bisim-gjkw \
+    weak-bisim \
+    dpweak-bisim \
+    sim \
+    ready-sim \
+    trace \
+    weak-trace \
+do
+echo "$(ltscompare -q -e "$MET" Ctm_lim.lts Cm.lts)\t$MET"
+done
+```
+
+E como resultado obtemos o seguinte:
+
+```
+false	bisim
+false	bisim-gv
+false	bisim-gjkw
+true	branching-bisim
+true	branching-bisim-gv
+true	branching-bisim-gjkw
+true	dpbranching-bisim
+true	dpbranching-bisim-gv
+true	dpbranching-bisim-gjkw
+true	weak-bisim
+true	dpweak-bisim
+false	sim
+false	ready-sim
+false	trace
+true	weak-trace
+```
+
+De notar que são equivalentes pelos critérios de Bissimulação Fraca (`weak-bisim`) e comparação fraca de traços (`weak-trace`).
 
 ## Questão 4
 
@@ -127,8 +198,11 @@ init
 
 ## Referências
 
- * [_Labelled transition systems: Determinism_][lts_determinism]
+ * [_Labelled transition systems: Determinism_]
+ * [_Process Algebra_]
 
-[^lts_determinism]: Ver [_Labelled transition systems: Determinism_][lts_determinism]
+[^buffers]: Ver slides [_Process Algebra_] (Ficheiro `IeC-PA1.pdf`)
+[^lts_determinism]: Ver [_Labelled transition systems: Determinism_]
 
-[lts_determinism]: https://www.mcrl2.org/web/user_manual/articles/lts.html#determinism
+[_Labelled transition systems: Determinism_]: https://www.mcrl2.org/web/user_manual/articles/lts.html#determinism
+[_Process Algebra_]: https://arca.di.uminho.pt/ic-1920/slides/IeC-PA2.pdf

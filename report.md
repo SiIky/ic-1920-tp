@@ -144,31 +144,50 @@ De notar que são equivalentes pelos critérios de Bissimulação Fraca (`weak-b
 
 ## Questão 4
 
-Iremos apresentar propriedades de segurança e animação sobre o processo $Ct_m$.
+De seguida apresentamos propriedades de segurança e animação sobre o processo $Ct_m$ e verificamos manualmente e recorrendo ao mCRL2.
 
-### Alínea _a_
+### Alínea A
+
+Tendo em conta que para um processo E, $E \vDash \phi \iff E \in \| \phi \|$ , e utilizando as propriedades da semântica denotacional, provamos as seguintes propriedades temporais.
 
 #### Propriedades de Segurança
 
  1. `[true*.up.zr]false` -- Impossível fazer transição por $up$ seguida de $zr$.
 
-$\forall n \in \mathbb{N},  Ct_n \in \{ Ct_n |  n>=0 \}$, logo $Ct_n \vDash$ `<up>true`
+![](safety1.png)
+$\forall n \in \mathbb{N},\  Ct_n \in \{ Ct_n\ |\  n\geq 0 \}$, logo $Ct_n \vDash$ `[-*.up.zr]false`.
 
  2. `[true*]<true>true` -- Qualquer sequência de ações chega sempre a um estado que tem a possibilidade de fazer mais uma ação, i.e., ausência de deadlock.
 
+![](safety2.png)
+$\forall n \in \mathbb{N},\  Ct_n \in \{ Ct_n\ |\  n\geq 0 \}$, logo $Ct_n \vDash$ `[-*]<->true`.
 
  3. `[true*.zr.dw]false` -- Impossível haver uma transição por $zr$ seguida de $dw$.
-
+  
+![](safety3.png)
+$\forall n \in \mathbb{N},\  Ct_n \in \{ Ct_n\ |\  n\geq 0 \}$, logo $Ct_n \vDash$ `[-*.zr.dw]false`.
 
 #### Propriedades de Animação
 
  1. `[up]<dw>true` -- Depois de aumentar o contador com a ação $up$, podemos sempre decrementar com a ação $dw$.
- 2. `[zr+]<zr+up>true` -- Após um ou mais $zr$ pode ser feito um $zr$ ou um $up$.
- 3. `[up.up]<dw><dw>true` -- Após duas transições seguidas por $up$ é sempre possível duas transições seguidas por $dw$.
 
-### Alínea _b_
+![](liveness1.png)
+$\forall n \in \mathbb{N},\  Ct_n \in \{ Ct_n\ |\  n\geq 0 \}$, logo $Ct_n \vDash$ `[up]<dw>true`
+
+ 2. `[zr+]<zr+up>true` -- Após um ou mais $zr$ pode ser feito um $zr$ ou um $up$.
+
+![](liveness2.png)
+$\forall n \in \mathbb{N},\  Ct_n \in \{ Ct_n\ |\  n\geq 0 \}$, logo $Ct_n \vDash$ `[zr+]<zr,up>true`.
+
+ 3. `<up>true` -- É sempre possível fazer uma transição por $up$.
+
+![](liveness3.png)
+$\forall n \in \mathbb{N},\  Ct_n \in \{ Ct_n\ |\  n\geq 0 \}$, logo $Ct_n \vDash$ `<up>true`.
+
+### Alínea B
 
 ![Após criar um ficheiro mcf com a respectiva propriedade temporal, a cada um aplicamos as ferramentas lps2pbes e pbes2bool para verificar a validade da propriedade. Como se pode verificar todas deram true pelo que se verifica que são válidas.](temporalProperties.png)
+
 
 ## Questão 5
 

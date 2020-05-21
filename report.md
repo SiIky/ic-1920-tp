@@ -151,8 +151,14 @@ Iremos apresentar propriedades de segurança e animação sobre o processo $Ct_m
 #### Propriedades de Segurança
 
  1. `[true*.up.zr]false` -- Impossível fazer transição por $up$ seguida de $zr$.
+
+$\forall n \in \mathbb{N},  Ct_n \in \{ Ct_n |  n>=0 \}$, logo $Ct_n \vDash$ `<up>true`
+
  2. `[true*]<true>true` -- Qualquer sequência de ações chega sempre a um estado que tem a possibilidade de fazer mais uma ação, i.e., ausência de deadlock.
+
+
  3. `[true*.zr.dw]false` -- Impossível haver uma transição por $zr$ seguida de $dw$.
+
 
 #### Propriedades de Animação
 

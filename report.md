@@ -62,7 +62,7 @@ Tanto no caso $n = 0$, como no caso $n > 0$, existe uma dependência do caso seg
 
 ## Questão 3
 
-A ferramenta mCRL2 não permite implementar a versão genérica, descrita no enunciado, dos processos $C$, $P$, e $Z$, portanto não será possível verificar a igualdade dos dois modelos com a ferramenta. No entanto, é possível implementar uma versão mais restrita e finita de $C$ e $Ct$, e verificar a igualdade entre estes dois modelos.
+A ferramenta mCRL2 não permite implementar a versão genérica, descrita no enunciado, dos processos $C$, $P$, e $Z$, portanto não será possível verificar a igualdade dos dois modelos com a ferramenta, de forma automática. No entanto, é possível implementar uma versão mais restrita e finita de $C$ e $Ct$, e verificar a igualdade entre estes dois modelos.
 
 Para fim exemplificativo, decidimos implementar uma versão de cada processo limitada a 3, i.e., um contador até 3.
 
@@ -140,54 +140,52 @@ false	trace
 true	weak-trace
 ```
 
-De notar que são equivalentes pelos critérios de Bissimulação Fraca (`weak-bisim`) e comparação fraca de traços (`weak-trace`), estudados nas aulas, e ainda pelos critérios de Bissimulação Ramificada[^branching_bisimulation] (`branching-bisim`), e com a propriedade de Preservação de Divergência[^divergence_preserving] (os métodos com o prefixo `dp`).
+De notar que são equivalentes pelos critérios de _Bissimulação Fraca_ (`weak-bisim`) e comparação fraca de traços (`weak-trace`), estudados nas aulas, e ainda pelos critérios de _Bissimulação Ramificada_[^branching_bisimulation] (`branching-bisim`), e com a propriedade de _Preservação de Divergência_[^divergence_preserving] (os métodos com o prefixo `dp`).
+
+A conclusão que tiramos é que podemos responder à questão anterior de forma semi-automática. Adaptando os dois processos, manualmente, podemos de seguida verificar equivalência entre os dois modelos, automaticamente, segundo vários critérios suportados pela ferramenta. Nestes não está incluído o de _Congruência Observacional_, mas está o de _Bissimulação Fraca_, que é o primeiro dos seus requisitos. Para concluir a prova seria então preciso verificar os dois requisitos restantes.
 
 ## Questão 4
 
 De seguida apresentamos propriedades de segurança e animação sobre o processo $Ct_m$ e verificamos manualmente e recorrendo ao mCRL2.
 
-### Alínea A
+**TODO:** nota sobre os conjuntos a seguir
 
-Tendo em conta que para um processo E, $E \vDash \phi \iff E \in \| \phi \|$ , e utilizando as propriedades da semântica denotacional, provamos as seguintes propriedades temporais.
+### Alínea _a_
+
+Tendo em conta que para um processo $E$, $E \vDash \phi \iff E \in \|\phi\|$, e utilizando as propriedades da semântica denotacional, provamos as seguintes propriedades temporais.
 
 #### Propriedades de Segurança
 
- 1. `[true*.up.zr]false` -- Impossível fazer transição por $up$ seguida de $zr$.
+ 1. $[-^*.up.zr]false$ -- Impossível fazer transição por $up$ seguida de $zr$.
+    ![](safety1.png)
+    $\forall n \in \mathbb{N},\ Ct_n \in \{ Ct_n\ |\ n\geq 0 \} \implies Ct_n \vDash [-^*.up.zr]false$.
 
-![](safety1.png)
-$\forall n \in \mathbb{N},\  Ct_n \in \{ Ct_n\ |\  n\geq 0 \}$, logo $Ct_n \vDash$ `[-*.up.zr]false`.
+ 2. $[-*]<->true$ -- Qualquer sequência de ações chega sempre a um estado que tem a possibilidade de fazer mais uma ação, i.e., ausência de deadlock.
+    ![](safety2.png)
+    $\forall n \in \mathbb{N},\ Ct_n \in \{ Ct_n\ |\ n\geq 0 \} \implies Ct_n \vDash [-^*]<->true$.
 
- 2. `[true*]<true>true` -- Qualquer sequência de ações chega sempre a um estado que tem a possibilidade de fazer mais uma ação, i.e., ausência de deadlock.
-
-![](safety2.png)
-$\forall n \in \mathbb{N},\  Ct_n \in \{ Ct_n\ |\  n\geq 0 \}$, logo $Ct_n \vDash$ `[-*]<->true`.
-
- 3. `[true*.zr.dw]false` -- Impossível haver uma transição por $zr$ seguida de $dw$.
-  
-![](safety3.png)
-$\forall n \in \mathbb{N},\  Ct_n \in \{ Ct_n\ |\  n\geq 0 \}$, logo $Ct_n \vDash$ `[-*.zr.dw]false`.
+ 3. $[-^*.zr.dw]false$ -- Impossível haver uma transição por $zr$ seguida de $dw$.
+    ![](safety3.png)
+    $\forall n \in \mathbb{N},\ Ct_n \in \{ Ct_n\ |\ n\geq 0 \} \implies Ct_n \vDash [-^*.zr.dw]false$.
 
 #### Propriedades de Animação
 
- 1. `[up]<dw>true` -- Depois de aumentar o contador com a ação $up$, podemos sempre decrementar com a ação $dw$.
+ 1. $[up]<dw>true$ -- Depois de aumentar o contador com a ação $up$, podemos sempre decrementar com a ação $dw$.
 
-![](liveness1.png)
-$\forall n \in \mathbb{N},\  Ct_n \in \{ Ct_n\ |\  n\geq 0 \}$, logo $Ct_n \vDash$ `[up]<dw>true`
+    ![](liveness1.png)
+    $\forall n \in \mathbb{N},\  Ct_n \in \{ Ct_n\ |\  n\geq 0 \} \implies Ct_n \vDash [up]<dw>true$
 
- 2. `[zr+]<zr+up>true` -- Após um ou mais $zr$ pode ser feito um $zr$ ou um $up$.
+ 2. $[zr^+]<zr, up>true$ -- Após um ou mais $zr$ pode ser feito um $zr$ ou um $up$.
+    ![](liveness2.png)
+    $\forall n \in \mathbb{N},\  Ct_n \in \{ Ct_n\ |\  n\geq 0 \} \implies Ct_n \vDash [zr^+]<zr, up>true$.
 
-![](liveness2.png)
-$\forall n \in \mathbb{N},\  Ct_n \in \{ Ct_n\ |\  n\geq 0 \}$, logo $Ct_n \vDash$ `[zr+]<zr,up>true`.
+ 3. $<up>true$ -- É sempre possível fazer uma transição por $up$.
+    ![](liveness3.png)
+    $\forall n \in \mathbb{N},\  Ct_n \in \{ Ct_n\ |\  n\geq 0 \} \implies Ct_n \vDash <up>true$.
 
- 3. `<up>true` -- É sempre possível fazer uma transição por $up$.
+### Alínea _b_
 
-![](liveness3.png)
-$\forall n \in \mathbb{N},\  Ct_n \in \{ Ct_n\ |\  n\geq 0 \}$, logo $Ct_n \vDash$ `<up>true`.
-
-### Alínea B
-
-![Após criar um ficheiro mcf com a respectiva propriedade temporal, a cada um aplicamos as ferramentas lps2pbes e pbes2bool para verificar a validade da propriedade. Como se pode verificar todas deram true pelo que se verifica que são válidas.](temporalProperties.png)
-
+![Após criar um ficheiro mcf com a respectiva propriedade temporal, a cada um aplicamos as ferramentas `lps2pbes` e `pbes2bool` para verificar a validade da propriedade. Como se pode verificar todas deram `true` pelo que se verifica que são válidas.](temporalProperties.png)
 
 ## Questão 5
 

@@ -10,6 +10,21 @@ MCRL2 := \
     queue.mcrl2 \
     simple_c.mcrl2 \
 
+MCF := \
+    liveness1.mcf \
+    liveness2.mcf \
+    liveness3.mcf \
+    liveness5_1.mcf \
+    liveness5_2.mcf \
+    qliveness1.mcf \
+    qliveness2.mcf \
+    qsafety1.mcf \
+    qsafety2.mcf \
+    safety1.mcf \
+    safety2.mcf \
+    safety3.mcf \
+    safety5_1.mcf \
+
 PBES := \
     Ctm_liveness1.pbes \
     Ctm_liveness2.pbes \
@@ -17,6 +32,8 @@ PBES := \
     Ctm_safety1.pbes \
     Ctm_safety2.pbes \
     Ctm_safety3.pbes \
+    queue_qliveness1.pbes \
+    queue_qliveness2.pbes \
     queue_qsafety1.pbes \
     queue_qsafety2.pbes \
 
@@ -25,7 +42,7 @@ LTS := $(MCRL2:.mcrl2=.lts)
 PDF := $(MD:.md=.pdf)
 PROPS := $(PBES:.pbes=.prop)
 
-DEPS := $(MD) $(MCRL2)
+DEPS := $(MD) $(MCRL2) $(MCF)
 TARGS := $(PDF) $(LTS) $(LPS) $(PBES)
 ALL := $(DEPS) $(TARGS)
 
@@ -75,6 +92,12 @@ queue_qsafety1.pbes: qsafety1.mcf queue.lps
 	lps2pbes -f $^ $@
 
 queue_qsafety2.pbes: qsafety2.mcf queue.lps
+	lps2pbes -f $^ $@
+
+queue_qliveness1.pbes: qliveness1.mcf queue.lps
+	lps2pbes -f $^ $@
+
+queue_qliveness2.pbes: qliveness2.mcf queue.lps
 	lps2pbes -f $^ $@
 
 exe3: Ctm_lim.lts Cm.lts

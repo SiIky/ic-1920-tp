@@ -15,32 +15,31 @@ init Ct(0);
 
 Utilizámos as ferramentas `lpsxsim`, `ltsgraph` e `ltsview` para observar o comportamento deste processo.
 
-### ltsgraph
+### `ltsgraph`
 
-Usamos esta ferramenta de forma a verificar o  grafo de transição do processo.
+Usamos esta ferramenta de forma a verificar o grafo de transição do processo.
 
-![ltsgraph](ltsgraph_contador.png)
+![`ltsgraph`](ltsgraph_contador.png)
 
-### lpsxsim
+### `lpsxsim`
 
 Usamos esta ferramenta para verificar de forma local, em cada estado, que ações são possíveis de realizar.
 
-![lpsxsim - O estado $Ct_0$ apenas permite as ações $zr$, que volta para o mesmo estado, e $up$, que passa para o estado $Ct_1$.](lpsxsim0.png)
+![`lpsxsim` -- O estado $Ct_0$ apenas permite as ações $zr$, que volta para o mesmo estado, e $up$, que passa para o estado $Ct_1$.](lpsxsim0.png)
 
+![`lpsxsim` -- Qualquer estado $Ct_n$, com $1 < n < 9$, permite as ações $up$, que transita para $Ct_{n+1}$, e $dw$, que transita para $Ct_{n-1}$.](lpsxsim1.png)
 
-![lpsxsim - Qualquer estado $Ct_n$, com $1 < n < 9$, permite as ações $up$, que transita para $Ct_{n+1}$, e $dw$, que transita para $Ct_{n-1}$.](lpsxsim1.png)
+![`lpsxsim` -- O estado $Ct_{10}$ apenas permite a ação $dw$ que transita para $Ct_9$.](lpsxsim10.png)
 
-![lpsxsim - O estado $Ct_{10}$ apenas permite a ação $dw$ que transita para $Ct_9$.](lpsxsim10.png)
+### `ltsview`
 
-### ltsview
+Esta ferramenta permite-nos verificar as ações possíveis de realizar em cada estado, como com `lpsxsim`, acrescentando uma parte gráfica em 3D ajudando na percepção da mesma.
 
-Esta ferramenta permite-nos verificar as ações possíveis de realizar em cada estado, como com lpsxsim, acrescentando uma parte gráfica em 3D ajudando na percepção da mesma.
+![`ltsview` - $Ct_0$](ltsview0.png)
 
-![ltsview - $Ct_0$](ltsview0.png)
+![`ltsview` - $Ct_3$](ltsview3.png)
 
-![ltsview - $Ct_3$](ltsview3.png)
-
-![ltsview - $Ct_{10}$](ltsview10.png)
+![`ltsview` - $Ct_{10}$](ltsview10.png)
 
 \pagebreak
 
@@ -158,30 +157,29 @@ Tendo em conta que para um processo $E$, $E \vDash \phi \iff E \in \|\phi\|$, e 
 
  1. $[-^*.up.zr]false$ -- Impossível fazer transição por $up$ seguida de $zr$.
     ![](safety1.png)
-    $\forall n \in \mathbb{N},\ Ct_n \in \{ Ct_n\ |\ n\geq 0 \} \implies Ct_n \vDash [-^*.up.zr]false$.
+    $\forall n \in \mathbb{N}:\ Ct_n \in \{ Ct_n\ |\ n \geq 0 \} \implies Ct_n \vDash [-^*.up.zr]false$.
 
- 2. $[-*]<->true$ -- Qualquer sequência de ações chega sempre a um estado que tem a possibilidade de fazer mais uma ação, i.e., ausência de deadlock.
+ 2. $[-^*]<->true$ -- Qualquer sequência de ações chega sempre a um estado que tem a possibilidade de fazer mais uma ação, i.e., ausência de deadlock.
     ![](safety2.png)
-    $\forall n \in \mathbb{N},\ Ct_n \in \{ Ct_n\ |\ n\geq 0 \} \implies Ct_n \vDash [-^*]<->true$.
+    $\forall n \in \mathbb{N}:\ Ct_n \in \{ Ct_n\ |\ n \geq 0 \} \implies Ct_n \vDash [-^*]<->true$.
 
  3. $[-^*.zr.dw]false$ -- Impossível haver uma transição por $zr$ seguida de $dw$.
     ![](safety3.png)
-    $\forall n \in \mathbb{N},\ Ct_n \in \{ Ct_n\ |\ n\geq 0 \} \implies Ct_n \vDash [-^*.zr.dw]false$.
+    $\forall n \in \mathbb{N}:\ Ct_n \in \{ Ct_n\ |\ n \geq 0 \} \implies Ct_n \vDash [-^*.zr.dw]false$.
 
 #### Propriedades de Animação
 
- 1. $[up]<dw>true$ -- Depois de aumentar o contador com a ação $up$, podemos sempre decrementar com a ação $dw$.
-
+ 1. $[up]<dw>true$ -- Depois de aumentar o contador com a ação $up$, podemos sempre decrementar com a ação $dw$.\
     ![](liveness1.png)
-    $\forall n \in \mathbb{N},\  Ct_n \in \{ Ct_n\ |\  n\geq 0 \} \implies Ct_n \vDash [up]<dw>true$
+    $\forall n \in \mathbb{N}:\ Ct_n \in \{ Ct_n\ |\ n \geq 0 \} \implies Ct_n \vDash [up]<dw>true$
 
  2. $[zr^+]<zr, up>true$ -- Após um ou mais $zr$ pode ser feito um $zr$ ou um $up$.
     ![](liveness2.png)
-    $\forall n \in \mathbb{N},\  Ct_n \in \{ Ct_n\ |\  n\geq 0 \} \implies Ct_n \vDash [zr^+]<zr, up>true$.
+    $\forall n \in \mathbb{N}:\ Ct_n \in \{ Ct_n\ |\ n \geq 0 \} \implies Ct_n \vDash [zr^+]<zr, up>true$.
 
  3. $<up>true$ -- É sempre possível fazer uma transição por $up$.
     ![](liveness3.png)
-    $\forall n \in \mathbb{N},\  Ct_n \in \{ Ct_n\ |\  n\geq 0 \} \implies Ct_n \vDash <up>true$.
+    $\forall n \in \mathbb{N}:\ Ct_n \in \{ Ct_n\ |\ n \geq 0 \} \implies Ct_n \vDash <up>true$.
 
 ### Alínea _b_
 

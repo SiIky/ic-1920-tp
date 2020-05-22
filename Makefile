@@ -14,8 +14,6 @@ MCF := \
     liveness1.mcf \
     liveness2.mcf \
     liveness3.mcf \
-    liveness5_1.mcf \
-    liveness5_2.mcf \
     qliveness1.mcf \
     qliveness2.mcf \
     qsafety1.mcf \
@@ -23,7 +21,6 @@ MCF := \
     safety1.mcf \
     safety2.mcf \
     safety3.mcf \
-    safety5_1.mcf \
 
 PBES := \
     Ctm_liveness1.pbes \

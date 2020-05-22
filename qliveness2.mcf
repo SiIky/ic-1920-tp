@@ -1,1 +1,1 @@
-forall x:Bool . [dequeue(x)] (mu Q . exists y:Bool . <enqueue(y)> true || <true> Q)
+forall x:Bool . [dequeue(x)] (mu Q . forall y:Bool . <enqueue(y)> true || <true> Q)

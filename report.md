@@ -209,6 +209,29 @@ init hide({m01, m12},
 
 ### Alínea _b_
 
+De seguida apresentamos propriedades de segurança e animação sobre a Queue e a verificação das mesmas com recurso ao mCRL2.
+
+#### Propriedades de Segurança
+1. $\nu P.([empty]<enqueue(x)>true \wedge [-]P)\ , \forall x \in Bool$   
+A seguir a cada empty é sempre possível fazer um enqueue.
+
+2. $\nu P.([enqueue(x)]\  \mu Q.(<dequeue(x)>true\ \vee <->Q) \wedge [-]P)\ , \forall x \in Bool$   
+A seguir a um enqueue com um dado valor $x$ acabaremos por conseguir fazer dequeue desse mesmo valor.
+
+
+#### Propriedades de Animação
+1. $\forall x \in Bool.\ \exists y \in Bool.\ [enqueue(x)].\ \mu Q.(<dequeue(y)>true\ \vee <->Q)$   
+Após um enqueue de qualquer valor é possível fazer um dequeue de um determinado valor não obrigatoriamente igual ao valor do enqueue anterior.
+
+2. $\forall x,y \in Bool.\ [dequeue(x)].\ \mu Q.(<enqueue(y)>true\ \vee <->Q)$   
+Após um dequeue de qualquer valor é possível fazer um enqueue de um qualquer valor.
+
+
+As quatro propriedades referidas foram testadas utilizando as ferramentas disponibilizadas pelo mCRL2. 
+
+![Pode-se verificar que todas as propriedades temporais passaram no teste.](queue_tempprop.png)
+
+
 ## Referências
 
  * [_Labelled transition systems: Branching Bisimilarity_]

@@ -6,7 +6,7 @@
 ## Questão 1
 
 Apresentamos de seguida o código em mCRL2 que define o modelo de um contador com o processo $Ct$ referido no enunciado.
-De forma a ser viável a apresentação com as ferramentas utilizadas limitamos o LTS a dez estados na sua criação com o comando `lps2lts -l 10 Ctm.lps Ctm.lts`{.sh} .
+De forma a ser viável a apresentação com as ferramentas utilizadas, limitamos o LTS a dez estados na sua criação com o comando `lps2lts -l 10 Ctm.lps Ctm.lts`{.sh}.
 
 ```mcrl2
 act up, zr, dw;
@@ -32,6 +32,8 @@ Usamos esta ferramenta para verificar de forma local, em cada estado, que açõe
 
 ![`lpsxsim` -- Qualquer estado $Ct_n$, com $n > 0$, permite as ações $up$, que transita para $Ct_{n+1}$, e $dw$, que transita para $Ct_{n-1}$.](lpsxsim1.png)
 
+\pagebreak
+
 ### `ltsview`
 
 Esta ferramenta permite-nos verificar as ações possíveis de realizar em cada estado, como com `lpsxsim`, acrescentando uma parte gráfica em 3D ajudando na percepção da mesma.
@@ -42,8 +44,6 @@ Esta ferramenta permite-nos verificar as ações possíveis de realizar em cada 
 
 \pagebreak
 
----
-
 ## Questão 2
 
 Para dois processos $E$ e $F$, $E = F$, i.e. $E$ e $F$ são observacionalmente congruentes, sse:
@@ -53,8 +53,6 @@ Para dois processos $E$ e $F$, $E = F$, i.e. $E$ e $F$ são observacionalmente c
  (@3) $F \underrightarrow{\tau} F\textquotesingle \implies E \underrightarrow{\tau^+} E\textquotesingle$
 
 De seguida apresentamos a prova de $C^n = Ct_n$.
-
-\pagebreak
 
 ### (@1)
 
@@ -83,8 +81,6 @@ Como $\forall n \in \mathbb{N}: C^n$ não tem transições por $\tau$, este requ
 Análogamente, como $\forall n \in \mathbb{N}: Ct_n$ não tem transições por $\tau$, este requisito é trivialmente provado.
 
 Assim, por (@1), (@2) e (@3), podemos concluir que $C^n = Ct_n$
-
----
 
 ## Questão 3
 
@@ -169,10 +165,6 @@ true	weak-trace
 De notar que são equivalentes pelos critérios de _Bissimulação Fraca_ (`weak-bisim`) e comparação fraca de traços (`weak-trace`), estudados nas aulas, e ainda pelos critérios de _Bissimulação Ramificada_[^branching_bisimulation] (`branching-bisim`), e com a propriedade de _Preservação de Divergência_[^divergence_preserving] (os métodos com o prefixo `dp`).
 
 A conclusão que tiramos é que podemos responder à questão anterior de forma semi-automática: adaptando os dois processos, manualmente, podemos de seguida verificar a equivalência entre os dois modelos, automaticamente, segundo vários critérios suportados pela ferramenta. Nestes não está incluído o de _Congruência Observacional_, mas está o de _Bissimulação Fraca_, que é o primeiro dos seus requisitos. Para concluir a prova seria então preciso verificar os dois requisitos restantes.
-
----
-
-\pagebreak
 
 ## Questão 4
 
@@ -268,6 +260,8 @@ De seguida apresentamos propriedades de segurança e animação sobre a Queue e 
 As quatro propriedades referidas foram testadas utilizando as ferramentas disponibilizadas pelo mCRL2.
 
 ![Pode-se verificar que todas as propriedades temporais passaram no teste.](queue_tempprop.png)
+
+\pagebreak
 
 ## Referências
 

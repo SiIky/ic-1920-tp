@@ -1,9 +1,12 @@
 # TP 1: Interacção e Concorrência
 
+ * 47419 João Bastos
+ * 76361 André Sá
+
 ## Questão 1
 
 Apresentamos de seguida o código em mCRL2 que define o modelo de um contador com o processo $Ct$ referido no enunciado.
-De forma a ser viável a apresentação com as ferramentas utilizadas colocamos $N = 10$ como valor limite de $n$.
+De forma a ser viável a apresentação com as ferramentas utilizadas limitamos o LTS a dez estados na sua criação com o comando `lps2lts -l 10 Ctm.lps Ctm.lts`{.sh} .
 
 ```mcrl2
 act up, zr, dw;
@@ -19,7 +22,8 @@ Utilizámos as ferramentas `lpsxsim`, `ltsgraph` e `ltsview` para observar o com
 
 Usamos esta ferramenta de forma a verificar o grafo de transição do processo.
 
-![`ltsgraph`](ltsgraph_contador.png)
+![`ltsgraph` -- É apresentado o LTS em forma de grafo. Como limitamos o LTS a 10 estados são só geradas as transições dos primeiros 10 estados.](ltsgraph.png)
+
 
 ### `lpsxsim`
 
@@ -27,9 +31,8 @@ Usamos esta ferramenta para verificar de forma local, em cada estado, que açõe
 
 ![`lpsxsim` -- O estado $Ct_0$ apenas permite as ações $zr$, que volta para o mesmo estado, e $up$, que passa para o estado $Ct_1$.](lpsxsim0.png)
 
-![`lpsxsim` -- Qualquer estado $Ct_n$, com $1 < n < 9$, permite as ações $up$, que transita para $Ct_{n+1}$, e $dw$, que transita para $Ct_{n-1}$.](lpsxsim1.png)
+![`lpsxsim` -- Qualquer estado $Ct_n$, com $n > 0$, permite as ações $up$, que transita para $Ct_{n+1}$, e $dw$, que transita para $Ct_{n-1}$.](lpsxsim1.png)
 
-![`lpsxsim` -- O estado $Ct_{10}$ apenas permite a ação $dw$ que transita para $Ct_9$.](lpsxsim10.png)
 
 ### `ltsview`
 
@@ -38,8 +41,6 @@ Esta ferramenta permite-nos verificar as ações possíveis de realizar em cada 
 ![`ltsview` - $Ct_0$](ltsview0.png)
 
 ![`ltsview` - $Ct_3$](ltsview3.png)
-
-![`ltsview` - $Ct_{10}$](ltsview10.png)
 
 \pagebreak
 
@@ -141,13 +142,11 @@ true	weak-trace
 
 De notar que são equivalentes pelos critérios de _Bissimulação Fraca_ (`weak-bisim`) e comparação fraca de traços (`weak-trace`), estudados nas aulas, e ainda pelos critérios de _Bissimulação Ramificada_[^branching_bisimulation] (`branching-bisim`), e com a propriedade de _Preservação de Divergência_[^divergence_preserving] (os métodos com o prefixo `dp`).
 
-A conclusão que tiramos é que podemos responder à questão anterior de forma semi-automática. Adaptando os dois processos, manualmente, podemos de seguida verificar equivalência entre os dois modelos, automaticamente, segundo vários critérios suportados pela ferramenta. Nestes não está incluído o de _Congruência Observacional_, mas está o de _Bissimulação Fraca_, que é o primeiro dos seus requisitos. Para concluir a prova seria então preciso verificar os dois requisitos restantes.
+A conclusão que tiramos é que podemos responder à questão anterior de forma semi-automática. Adaptando os dois processos, manualmente, podemos de seguida verificar a equivalência entre os dois modelos, automaticamente, segundo vários critérios suportados pela ferramenta. Nestes não está incluído o de _Congruência Observacional_, mas está o de _Bissimulação Fraca_, que é o primeiro dos seus requisitos. Para concluir a prova seria então preciso verificar os dois requisitos restantes.
 
 ## Questão 4
 
-De seguida apresentamos propriedades de segurança e animação sobre o processo $Ct_m$ e verificamos manualmente e recorrendo ao mCRL2.
-
-**TODO:** nota sobre os conjuntos a seguir
+De seguida apresentamos propriedades de segurança e animação sobre o processo $Ct_m$ e verificamo-las tanto manualmente como recorrendo ao mCRL2.
 
 ### Alínea _a_
 
@@ -156,16 +155,25 @@ Tendo em conta que para um processo $E$, $E \vDash \phi \iff E \in \|\phi\|$, e 
 #### Propriedades de Segurança
 
  1. $[-^*.up.zr]false$ -- Impossível fazer transição por $up$ seguida de $zr$.
-    ![](safety1.png)
-    $\forall n \in \mathbb{N}:\ Ct_n \in \{ Ct_n\ |\ n \geq 0 \} \implies Ct_n \vDash [-^*.up.zr]false$.
+   
+   ![](safety1.png)
+
+   $\forall n \in \mathbb{N}:\ Ct_n \in \{ Ct_n\ |\ n \geq 0 \} \implies Ct_n \vDash [-^*.up.zr]false$.
+
 
  2. $[-^*]<->true$ -- Qualquer sequência de ações chega sempre a um estado que tem a possibilidade de fazer mais uma ação, i.e., ausência de deadlock.
+    
     ![](safety2.png)
+    
     $\forall n \in \mathbb{N}:\ Ct_n \in \{ Ct_n\ |\ n \geq 0 \} \implies Ct_n \vDash [-^*]<->true$.
 
+
  3. $[-^*.zr.dw]false$ -- Impossível haver uma transição por $zr$ seguida de $dw$.
+    
     ![](safety3.png)
+    
     $\forall n \in \mathbb{N}:\ Ct_n \in \{ Ct_n\ |\ n \geq 0 \} \implies Ct_n \vDash [-^*.zr.dw]false$.
+
 
 #### Propriedades de Animação
 

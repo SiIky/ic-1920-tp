@@ -47,7 +47,7 @@ all: $(ALL)
 
 props: $(PROPS)
 
-report.md: lpsxsim0.png lpsxsim10.png lpsxsim1.png ltsgraph_contador.png ltsview0.png ltsview10.png ltsview3.png temporalProperties.png
+report.md: $(wildcard *.png)
 
 %.lps: %.mcrl2
 	mcrl22lps $< $@

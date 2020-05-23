@@ -44,7 +44,12 @@ Esta ferramenta permite-nos verificar as ações possíveis de realizar em cada 
 
 ## Questão 2
 
-Os processos $C^n$ e $Ct_n$ ($n \in \mathbb{N}$) sao deterministas pois $\forall p \in S, a \in N: \exists! q \in S: (p, a, q) \in \rightarrow$[^lts_determinism], e como tal, $Tr(C^n) = Tr(Ct_n) \Leftrightarrow C^n \sim Ct_n \Rightarrow C^n = Ct_n$. Portanto a nossa prova é a de igualdade dos traços de $C^n$ e de $Ct_n$.
+Dois processos $Ct_n$ e $C^n$, são observacionalmente congruentes, $Ct_n = C^n$ sse:
+
+ i. $Ct_n \approx C^n$
+ ii. $Ct_n \underrightarrow{\tau} Ct_n$
+
+Os processos $C^n$ e $Ct_n$ ($n \in \mathbb{N}$) são deterministas pois $\forall p \in S, a \in N: \exists! q \in S: (p, a, q) \in \rightarrow$[^lts_determinism], e como tal, $Tr_w(C^n) = Tr_w(Ct_n) \Leftrightarrow C^n \approx Ct_n$ sendo $Tr_w$ o conjunto dos traços fracos de um processo[^weak_trace]. Portanto a nossa prova é a de igualdade dos traços de $C^n$ e de $Ct_n$.
 
 Caso $n = 0$:
  :  $$Tr(C^0) = Tr(Ct_0)$$
@@ -57,6 +62,7 @@ Caso $n > 0$:
     $$\{\epsilon\} \cup dw \cdot Tr(C^{n-1}) \cup up \cdot Tr(C^{n+1}) = \{\epsilon\} \cup dw \cdot Tr(Ct_{n-1}) \cup up \cdot Tr(Ct_{n+1})$$
 
 Tanto no caso $n = 0$, como no caso $n > 0$, existe uma dependência do caso seguinte, $n + 1$; no entanto, este caso $n + 1$ pode ser provado de forma similar, e portanto a prova é válida.
+
 
 ## Questão 3
 
@@ -243,8 +249,11 @@ As quatro propriedades referidas foram testadas utilizando as ferramentas dispon
 
 [^lts_determinism]: Ver [_Labelled transition systems: Determinism_]
 
+[^weak_trace]: Ver [_Labelled transition systems: Weak trace equivalence_]
+
 [^divergence_preserving]: Ver [_Rooted Divergence-Preserving Branching Bisimilarity is a Congruence_][rooted_divergence_preserving_branching_bisimilarity]
 
+[_Labelled transition systems: Weak trace equivalence_]: https://www.mcrl2.org/web/user_manual/articles/lts.html#weak-trace-equivalence
 [_Labelled transition systems: Branching Bisimilarity_]: https://www.mcrl2.org/web/user_manual/articles/lts.html#branching-bisimilarity
 [_Labelled transition systems: Determinism_]: https://www.mcrl2.org/web/user_manual/articles/lts.html#determinism
 [_Process Algebra_]: https://arca.di.uminho.pt/ic-1920/slides/IeC-PA2.pdf

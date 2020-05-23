@@ -24,7 +24,6 @@ Usamos esta ferramenta de forma a verificar o grafo de transição do processo.
 
 ![`ltsgraph` -- É apresentado o LTS em forma de grafo. Como limitamos o LTS a 10 estados são só geradas as transições dos primeiros 10 estados.](ltsgraph.png)
 
-
 ### `lpsxsim`
 
 Usamos esta ferramenta para verificar de forma local, em cada estado, que ações são possíveis de realizar.
@@ -32,7 +31,6 @@ Usamos esta ferramenta para verificar de forma local, em cada estado, que açõe
 ![`lpsxsim` -- O estado $Ct_0$ apenas permite as ações $zr$, que volta para o mesmo estado, e $up$, que passa para o estado $Ct_1$.](lpsxsim0.png)
 
 ![`lpsxsim` -- Qualquer estado $Ct_n$, com $n > 0$, permite as ações $up$, que transita para $Ct_{n+1}$, e $dw$, que transita para $Ct_{n-1}$.](lpsxsim1.png)
-
 
 ### `ltsview`
 
@@ -46,7 +44,7 @@ Esta ferramenta permite-nos verificar as ações possíveis de realizar em cada 
 
 ## Questão 2
 
-Os processos $C^n$ e $Ct_n$ ($n \in \mathbb{N}$) sao deterministas pois $\forall\ p \in S, a \in N : \exists! q \in S : (p, a, q) \in \rightarrow$[^lts_determinism], e como tal, $Tr(C^n) = Tr(Ct_n) \Leftrightarrow C^n \sim Ct_n \Rightarrow C^n = Ct_n$. Portanto a nossa prova é a de igualdade dos traços de $C^n$ e de $Ct_n$.
+Os processos $C^n$ e $Ct_n$ ($n \in \mathbb{N}$) sao deterministas pois $\forall p \in S, a \in N: \exists! q \in S: (p, a, q) \in \rightarrow$[^lts_determinism], e como tal, $Tr(C^n) = Tr(Ct_n) \Leftrightarrow C^n \sim Ct_n \Rightarrow C^n = Ct_n$. Portanto a nossa prova é a de igualdade dos traços de $C^n$ e de $Ct_n$.
 
 Caso $n = 0$:
  :  $$Tr(C^0) = Tr(Ct_0)$$
@@ -155,39 +153,30 @@ Tendo em conta que para um processo $E$, $E \vDash \phi \iff E \in \|\phi\|$, e 
 #### Propriedades de Segurança
 
  1. $[-^*.up.zr]false$ -- Impossível fazer transição por $up$ seguida de $zr$.
-   
    ![](safety1.png)
-
-   $\forall n \in \mathbb{N}:\ Ct_n \in \{ Ct_n\ |\ n \geq 0 \} \implies Ct_n \vDash [-^*.up.zr]false$.
-
+   $\forall n \in \mathbb{N}: Ct_n \in \{ Ct_n\ |\ n \geq 0 \} \implies Ct_n \vDash [-^*.up.zr]false$.
 
  2. $[-^*]<->true$ -- Qualquer sequência de ações chega sempre a um estado que tem a possibilidade de fazer mais uma ação, i.e., ausência de deadlock.
-    
     ![](safety2.png)
-    
-    $\forall n \in \mathbb{N}:\ Ct_n \in \{ Ct_n\ |\ n \geq 0 \} \implies Ct_n \vDash [-^*]<->true$.
-
+    $\forall n \in \mathbb{N}: Ct_n \in \{ Ct_n\ |\ n \geq 0 \} \implies Ct_n \vDash [-^*]<->true$.
 
  3. $[-^*.zr.dw]false$ -- Impossível haver uma transição por $zr$ seguida de $dw$.
-    
     ![](safety3.png)
-    
-    $\forall n \in \mathbb{N}:\ Ct_n \in \{ Ct_n\ |\ n \geq 0 \} \implies Ct_n \vDash [-^*.zr.dw]false$.
-
+    $\forall n \in \mathbb{N}: Ct_n \in \{ Ct_n\ |\ n \geq 0 \} \implies Ct_n \vDash [-^*.zr.dw]false$.
 
 #### Propriedades de Animação
 
  1. $[up]<dw>true$ -- Depois de aumentar o contador com a ação $up$, podemos sempre decrementar com a ação $dw$.\
     ![](liveness1.png)
-    $\forall n \in \mathbb{N}:\ Ct_n \in \{ Ct_n\ |\ n \geq 0 \} \implies Ct_n \vDash [up]<dw>true$
+    $\forall n \in \mathbb{N}: Ct_n \in \{ Ct_n\ |\ n \geq 0 \} \implies Ct_n \vDash [up]<dw>true$
 
  2. $[zr^+]<zr, up>true$ -- Após um ou mais $zr$ pode ser feito um $zr$ ou um $up$.
     ![](liveness2.png)
-    $\forall n \in \mathbb{N}:\ Ct_n \in \{ Ct_n\ |\ n \geq 0 \} \implies Ct_n \vDash [zr^+]<zr, up>true$.
+    $\forall n \in \mathbb{N}: Ct_n \in \{ Ct_n\ |\ n \geq 0 \} \implies Ct_n \vDash [zr^+]<zr, up>true$.
 
  3. $<up>true$ -- É sempre possível fazer uma transição por $up$.
     ![](liveness3.png)
-    $\forall n \in \mathbb{N}:\ Ct_n \in \{ Ct_n\ |\ n \geq 0 \} \implies Ct_n \vDash <up>true$.
+    $\forall n \in \mathbb{N}: Ct_n \in \{ Ct_n\ |\ n \geq 0 \} \implies Ct_n \vDash <up>true$.
 
 ### Alínea _b_
 
@@ -220,25 +209,25 @@ init hide({m01, m12},
 De seguida apresentamos propriedades de segurança e animação sobre a Queue e a verificação das mesmas com recurso ao mCRL2.
 
 #### Propriedades de Segurança
-1. $\nu P.([empty]<enqueue(x)>true \wedge [-]P)\ , \forall x \in Bool$   
-A seguir a cada empty é sempre possível fazer um enqueue.
 
-2. $\nu P.([enqueue(x)]\  \mu Q.(<dequeue(x)>true\ \vee <->Q) \wedge [-]P)\ , \forall x \in Bool$   
-A seguir a um enqueue com um dado valor $x$ acabaremos por conseguir fazer dequeue desse mesmo valor.
+ 1. $\nu P . ([empty] \forall x \in Bool: <enqueue(x)>true \wedge [-]P)$\
+    A seguir a cada empty é sempre possível fazer um enqueue.
+
+ 2. $\nu P . \forall x \in Bool: ([enqueue(x)] \mu Q . (<dequeue(x)> true \vee <-> Q) \wedge [-]P)$\
+    A seguir a um enqueue com um dado valor $x$ acabaremos por conseguir fazer dequeue desse mesmo valor.
 
 
 #### Propriedades de Animação
-1. $\forall x \in Bool.\ \exists y \in Bool.\ [enqueue(x)].\ \mu Q.(<dequeue(y)>true\ \vee <->Q)$   
-Após um enqueue de qualquer valor é possível fazer um dequeue de um determinado valor não obrigatoriamente igual ao valor do enqueue anterior.
 
-2. $\forall x,y \in Bool.\ [dequeue(x)].\ \mu Q.(<enqueue(y)>true\ \vee <->Q)$   
-Após um dequeue de qualquer valor é possível fazer um enqueue de um qualquer valor.
+ 1. $\forall x \in Bool: \exists y \in Bool: [enqueue(x)] \mu Q . (<dequeue(y)> true \vee <-> Q)$\
+    Após um enqueue de qualquer valor é possível fazer um dequeue de um determinado valor não obrigatoriamente igual ao valor do enqueue anterior.
 
+ 2. $\forall x, y \in Bool: [dequeue(x)]: \mu Q.(<enqueue(y)>true \vee <->Q)$\
+    Após um dequeue de qualquer valor é possível fazer um enqueue de um qualquer valor.
 
-As quatro propriedades referidas foram testadas utilizando as ferramentas disponibilizadas pelo mCRL2. 
+As quatro propriedades referidas foram testadas utilizando as ferramentas disponibilizadas pelo mCRL2.
 
 ![Pode-se verificar que todas as propriedades temporais passaram no teste.](queue_tempprop.png)
-
 
 ## Referências
 

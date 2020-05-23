@@ -212,7 +212,7 @@ Tendo em conta que para um processo $E$, $E \vDash \phi \iff E \in \|\phi\|$, e 
 
 ![Após criar um ficheiro mcf com a respectiva propriedade temporal, a cada um aplicamos as ferramentas `lps2pbes` e `pbes2bool` para verificar a validade da propriedade. Como se pode verificar todas deram `true` pelo que se verifica que são válidas.](temporalProperties.png)
 
----
+\pagebreak
 
 ## Questão 5
 
@@ -267,23 +267,20 @@ As quatro propriedades referidas foram testadas utilizando as ferramentas dispon
 
  * [_Labelled transition systems: Branching Bisimilarity_]
  * [_Labelled transition systems: Determinism_]
+ * [_Labelled transition systems: Weak trace equivalence_]
  * [_Process Algebra_]
  * [_Rooted Divergence-Preserving Branching Bisimilarity is a Congruence_][rooted_divergence_preserving_branching_bisimilarity]
  * [_Strong, Weak and Branching Bisimulation for Transition Systems and Markov Reward Chains: A Unifying Matrix Approach_][strong_weak_branching_bisimulation]
 
 [^branching_bisimulation]: Ver [_Labelled transition systems: Branching Bisimilarity_], e [_Strong, Weak and Branching Bisimulation for Transition Systems and Markov Reward Chains: A Unifying Matrix Approach_][strong_weak_branching_bisimulation]
-
 [^buffers]: Ver slides [_Process Algebra_] (Ficheiro `IeC-PA1.pdf`)
-
+[^divergence_preserving]: Ver [_Rooted Divergence-Preserving Branching Bisimilarity is a Congruence_][rooted_divergence_preserving_branching_bisimilarity]
 [^lts_determinism]: Ver [_Labelled transition systems: Determinism_]
-
 [^weak_trace]: Ver [_Labelled transition systems: Weak trace equivalence_]
 
-[^divergence_preserving]: Ver [_Rooted Divergence-Preserving Branching Bisimilarity is a Congruence_][rooted_divergence_preserving_branching_bisimilarity]
-
-[_Labelled transition systems: Weak trace equivalence_]: https://www.mcrl2.org/web/user_manual/articles/lts.html#weak-trace-equivalence
 [_Labelled transition systems: Branching Bisimilarity_]: https://www.mcrl2.org/web/user_manual/articles/lts.html#branching-bisimilarity
 [_Labelled transition systems: Determinism_]: https://www.mcrl2.org/web/user_manual/articles/lts.html#determinism
-[_Process Algebra_]: https://arca.di.uminho.pt/ic-1920/slides/IeC-PA2.pdf
+[_Labelled transition systems: Weak trace equivalence_]: https://www.mcrl2.org/web/user_manual/articles/lts.html#weak-trace-equivalence
+[_Process Algebra_]: https://arca.di.uminho.pt/ic-1920/slides/IeC-PA1.pdf
 [rooted_divergence_preserving_branching_bisimilarity]: https://arxiv.org/abs/1801.01180
 [strong_weak_branching_bisimulation]: https://arxiv.org/abs/0912.1902

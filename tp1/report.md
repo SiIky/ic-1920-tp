@@ -136,7 +136,7 @@ for MET in \
     sim \
     ready-sim \
     trace \
-    weak-trace \
+    weak-trace
 do
 echo "$(ltscompare -q -e "$MET" Ctm_lim.lts Cm.lts)\t$MET"
 done
